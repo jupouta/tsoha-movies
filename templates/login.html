@@ -1,0 +1,14 @@
+{% extends "index.html" %}
+{% block content %}
+
+<form action="/login" method="POST">
+Käyttäjätunnus:
+<input type="text" name="user" minlength="2" maxlength="20" required>
+<br>
+Salasana:
+<input type="password" name="password" minlength="2" required>
+<br>
+<input type="submit" value="Kirjaudu">
+</form>
+
+{% endblock %}

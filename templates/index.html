@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="static/style.css">
+<title>Elokuvasovellus</title>
+<h1>Elokuvatietokanta</h1>
+{% if session.user %}
+<p>Olet kirjautunut nimellä {{ session.user }}</p>
+{% endif %}
+
+<h2>Elokuvat</h2>
+<ul>
+{% for movie in movies %}
+<li> {{ movie }}
+{% endfor %}
+</ul>
+
+{% block content %}{% endblock %}
