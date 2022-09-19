@@ -10,6 +10,16 @@ services:
       - db_data:/var/lib/postgresql/data
       - ./postgres/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d/
     restart: always
+  web:
+    build: .
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    depends_on:
+      - db
+    volumes:
+      - ./webapp:/opt/webapp
 
 volumes:
   db_data:

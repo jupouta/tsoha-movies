@@ -29,7 +29,7 @@ def query():
         movies = actions.find_movies_by_name(query)
         return render_template('movies.html', movies=movies)
     else:
-        movies = actions.get_movie_names()
+        movies = actions.get_movies()
         return render_template('movies.html', movies=movies)
 
 @app.route('/movies/<int:id>')
