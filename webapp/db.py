@@ -4,7 +4,6 @@ class Database:
 
     def __init__(self, db):
         self.db = db
-        self.db.session.execute('SELECT 1')
 
     def get_movies(self):
         result = self.db.session.execute('SELECT * FROM movies;')
