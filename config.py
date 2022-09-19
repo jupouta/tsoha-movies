@@ -9,5 +9,7 @@ class Config:
     SECRET_KEY = environ.get("SECRET_KEY")
     FLASK_APP = environ.get("FLASK_APP")
 
-    SQLALCHEMY_DATABASE_URI = environ.get("DATABASE_URL")
+    db_url = environ.get("DATABASE_URL")
+    db_url = db_url.replace("postgres://", "postgresql://", 1)
+    SQLALCHEMY_DATABASE_URI = db_url
     SQLALCHEMY_TRACK_MODIFICATIONS = environ.get("SQLALCHEMY_TRACK_MODIFICATIONS")
