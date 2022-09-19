@@ -1,0 +1,7 @@
+
+<h3>Elokuvat</h3>
+<ul>
+{% for movie in movies %}
+<li><a href="/movies/{{ movie.id }}">{{ movie }}</a></li>
+{% endfor %}
+</ul>
