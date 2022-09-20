@@ -12,3 +12,18 @@ Sovelluksen ominaisuuksia:
 - Käyttäjä voi etsiä kaikki elokuvat, joiden nimessä on annettu sana.
 - Käyttäjä näkee myös listan, jossa elokuvat on järjestetty parhaimmasta huonoimpaan arvioiden mukaisesti.
 - Ylläpitäjä voi tarvittaessa poistaa käyttäjän antaman arvion.
+
+## Sovellus tällä hetkellä
+
+[Linkki Herokuun](https://tsoha-movies.herokuapp.com)
+
+Tämänhetkiset ominaisuudet:
+- Käyttäjä voi kirjautua sisään ja ulos (vain käyttäjätunnus 'testi' salasanalla 'testi' hyväksytään) sekä luoda uuden tunnuksen (saman tunnuksen lisääminen aiheuttaa virheen eikä salasanan toistoa vielä tarkisteta)
+- Käyttäjä näkee sovelluksen etusivulla listan elokuvista
+- Käyttäjä voi painaa elokuvan nimeä, jolloin siitä näytetään lisätietoja (esim. ohjaaja, valmistumisvuosi) ja sen arvioiden keskiarvon
+- Käyttäjä voi etsiä kaikki elokuvat, joiden nimessä on annettu sana.
+
+Puutteita:
+- Ei virheilmoituksia tai niiden handlaystä
+- Vain numeerisia arvioita
+- Ei ylläpitäjä-roolia
