@@ -1,3 +1,8 @@
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS movies;
+DROP TABLE IF EXISTS stars;
+DROP TABLE IF EXISTS reviews;
+
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     username TEXT UNIQUE,
@@ -12,10 +17,17 @@ CREATE TABLE movies (
     description TEXT
 );
 
+CREATE TABLE stars (
+    id SERIAL PRIMARY KEY,
+    stars INTEGER,
+    user_id INTEGER REFERENCES users,
+    movie_id INTEGER REFERENCES movies
+);
+
 CREATE TABLE reviews (
     id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES users,
     movie_id INTEGER REFERENCES movies,
-    stars INTEGER,
+    star_id INTEGER REFERENCES stars,
     comment TEXT
 );

@@ -22,6 +22,7 @@ def result():
         user_password = result.password
         if actions.check_password_in_hash(user_password, password):
             session["user"] = result.id
+            # TODO: tallenna myös käyttäjänimi html:ää varten
             return redirect("/")
         else:
             # TODO: ilmoitus
