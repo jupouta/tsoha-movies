@@ -20,7 +20,7 @@ Sovelluksen ominaisuuksia:
 Tämänhetkiset ominaisuudet:
 - Käyttäjä voi kirjautua sisään ja ulos (vain käyttäjätunnus 'testi' salasanalla 'testi' hyväksytään) sekä luoda uuden tunnuksen (saman tunnuksen lisääminen aiheuttaa virheen eikä salasanan toistoa vielä tarkisteta)
 - Käyttäjä näkee sovelluksen etusivulla listan elokuvista
-- Käyttäjä voi painaa elokuvan nimeä, jolloin siitä näytetään lisätietoja (esim. ohjaaja, valmistumisvuosi) ja sen arvioiden keskiarvon
+- Käyttäjä voi painaa elokuvan nimeä, jolloin siitä näytetään lisätietoja (esim. ohjaaja, valmistumisvuosi) ja sen arvioiden keskiarvo
 - Käyttäjä voi etsiä kaikki elokuvat, joiden nimessä on annettu sana.
 
 Puutteita:

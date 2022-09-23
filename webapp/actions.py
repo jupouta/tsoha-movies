@@ -38,9 +38,11 @@ class Actions:
         result = self.database.find_movie_by_id(id)
         return result
 
-    def give_star_review(self, user, stars, id):
-        result = self.database.add_new_star_review(user, int(stars), id)
-        print(result)
+    def give_star_review(self, user, stars, movie_id):
+        if self.database.get_star_review_by_user(user, movie_id):
+            self.database.update_star_review_by_user(user, movie_id, stars)
+        else:
+            self.database.add_new_star_review(user, int(stars), movie_id)
 
     def get_stars_for_movie(self, movie_id):
         result = self.database.get_stars_for_movie(movie_id)

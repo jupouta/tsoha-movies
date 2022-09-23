@@ -6,7 +6,7 @@ class Database:
         self.db = db
 
     def get_user(self, username):
-        result = self.db.session.execute('SELECT password, id FROM users WHERE username=:username;',
+        result = self.db.session.execute('SELECT password, id, username FROM users WHERE username=:username;',
                                          {'username':username})
         user = result.fetchone()
         return user
@@ -40,6 +40,17 @@ class Database:
     def add_new_star_review(self, user_id, stars, movie_id):
         self.db.session.execute('INSERT INTO stars (user_id, stars, movie_id) VALUES (:user_id, :stars, :movie_id)',
                                          {'user_id':user_id, 'stars':stars, 'movie_id':movie_id})
+        self.db.session.commit()
+
+    def get_star_review_by_user(self, user, movie_id):
+        result = self.db.session.execute('SELECT stars FROM stars WHERE movie_id=:movie_id AND user_id=:user_id;',
+                                {'movie_id':movie_id, 'user_id':user})
+        star = result.fetchone()
+        return star
+
+    def update_star_review_by_user(self, user, movie_id, stars):
+        self.db.session.execute('UPDATE stars SET stars=:stars WHERE user_id=:user_id AND movie_id=:movie_id',
+                                      {'stars':stars, 'user_id':user, 'movie_id':movie_id})
         self.db.session.commit()
 
     def get_stars_for_movie(self, movie_id):

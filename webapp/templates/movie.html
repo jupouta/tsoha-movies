@@ -1,4 +1,10 @@
-<h3>{{ movie.name }} {{ stars }}</h3>
+<!DOCTYPE html>
+<link rel="stylesheet" href="../static/style.css">
+{% if stars %}
+<h3>{{ movie.name }} {{ stars }} ⭐️</h3>
+{% else %}
+<h3>{{ movie.name }}</h3>
+{% endif %}
 <p>Julkaisuvuosi: {{ movie.year }}</p>
 <p>Ohjaaja: {{ movie.director }}</p>
 <p>Kuvaus: {{ movie.description }}</p>

@@ -3,7 +3,7 @@
 <title>Elokuvasovellus</title>
 <h1>Elokuvatietokanta</h1>
 {% if session.user %}
-<p>Olet kirjautunut nimellä {{ session.user }}</p>
+<p>Olet kirjautunut nimellä {{ session.username }}</p>
 <a href="/logout">Kirjaudu ulos</a>
 {% else %}
 <p>Kirjaudu sisään</p>

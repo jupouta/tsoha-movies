@@ -9,24 +9,24 @@ def index():
     movies = actions.get_movie_names()
     return render_template("index.html", movies=movies)
 
-@app.route("/login", methods=["POST"])
+@app.route('/login', methods=['POST'])
 def result():
-    user=request.form["user"]
-    password=request.form["password"]
+    user=request.form['user']
+    password=request.form['password']
 
     result = actions.check_user(user)
     if not result:  # invalid user
         # TODO: ilmoitus
-        return redirect("/")
+        return redirect('/')
     else:
         user_password = result.password
         if actions.check_password_in_hash(user_password, password):
-            session["user"] = result.id
-            # TODO: tallenna myös käyttäjänimi html:ää varten
-            return redirect("/")
+            session['user'] = result.id
+            session['username'] = result.username
+            return redirect('/')
         else:
             # TODO: ilmoitus
-            return redirect("/")
+            return redirect('/')
 
 @app.route('/logout')
 def logout():
@@ -62,10 +62,9 @@ def movie(id):
         stars = request.form.get('stars')
         try:
             print(session['user'], id)
-            # TODO: ylikirjoita(?), jos sama käyttäjä arvioi uudelleen
             actions.give_star_review(session['user'], stars, id)
         except:
-            # TODO: handle error
+            # TODO
             print('user not found')
 
     movie = actions.find_movie_by_id(id)
