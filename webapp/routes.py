@@ -9,24 +9,26 @@ def index():
     movies = actions.get_movie_names()
     return render_template("index.html", movies=movies)
 
-@app.route('/login', methods=['POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def result():
-    user=request.form['user']
-    password=request.form['password']
+    if request.method == 'POST':
+        user=request.form['user']
+        password=request.form['password']
 
-    result = actions.check_user(user)
-    if not result:  # invalid user
-        # TODO: ilmoitus
-        return redirect('/')
-    else:
-        user_password = result.password
-        if actions.check_password_in_hash(user_password, password):
-            session['user'] = result.id
-            session['username'] = result.username
-            return redirect('/')
+        result = actions.check_user(user)
+        if not result:  # invalid user
+            return render_template('error.html', error_message='Käyttäjää ei löytynyt')
         else:
-            # TODO: ilmoitus
-            return redirect('/')
+            user_password = result.password
+            if actions.check_password_in_hash(user_password, password):
+                session['user'] = result.id
+                session['username'] = result.username
+                return redirect('/')
+            else:
+                return render_template('error.html', error_message='Väärä käyttäjätunnus tai salasana')
+
+    return render_template('login.html')
+
 
 @app.route('/logout')
 def logout():
@@ -64,8 +66,7 @@ def movie(id):
             print(session['user'], id)
             actions.give_star_review(session['user'], stars, id)
         except:
-            # TODO
-            print('user not found')
+            return render_template('error.html', error_message='Et ole kirjautunut')
 
     movie = actions.find_movie_by_id(id)
     all_stars = actions.get_stars_for_movie(id)

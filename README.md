@@ -24,6 +24,5 @@ Tämänhetkiset ominaisuudet:
 - Käyttäjä voi etsiä kaikki elokuvat, joiden nimessä on annettu sana.
 
 Puutteita:
-- Ei virheilmoituksia tai niiden handlaystä
 - Vain numeerisia arvioita
 - Ei ylläpitäjä-roolia

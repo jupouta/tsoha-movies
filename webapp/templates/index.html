@@ -1,23 +1,12 @@
-<!DOCTYPE html>
-<link rel="stylesheet" href="static/style.css">
-<title>Elokuvasovellus</title>
-<h1>Elokuvatietokanta</h1>
+{% extends "layout.html" %}
+{% block content %}
+
 {% if session.user %}
 <p>Olet kirjautunut nimellä {{ session.username }}</p>
 <a href="/logout">Kirjaudu ulos</a>
 {% else %}
-<p>Kirjaudu sisään</p>
-<form action="/login" method="POST">
-Käyttäjätunnus:
-<input type="text" name="user" minlength="2" maxlength="20" required>
-<br>
-Salasana:
-<input type="password" name="password" minlength="2" required>
-<br>
-<input type="submit" value="Kirjaudu">
-</form>
+<p><a href="/login">Kirjaudu sisään</a></p>
 <p>Voit luoda tunnuksen <a href="/register">täällä</a></p>
-
 {% endif %}
 
 <h2>Elokuvat</h2>
@@ -27,10 +16,11 @@ Salasana:
 {% endfor %}
 </ul>
 
-{% block content %}{% endblock %}
 
 <form action="/movies" method="GET">
 Hae elokuvaa: <input type="text" name="query">
 <br>
 <input type="submit" value="Lähetä">
 </form>
+
+{% endblock %}
