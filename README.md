@@ -18,11 +18,11 @@ Sovelluksen ominaisuuksia:
 [Linkki Herokuun](https://tsoha-movies.herokuapp.com)
 
 Tämänhetkiset ominaisuudet:
-- Käyttäjä voi kirjautua sisään ja ulos (vain käyttäjätunnus 'testi' salasanalla 'testi' hyväksytään) sekä luoda uuden tunnuksen (saman tunnuksen lisääminen aiheuttaa virheen eikä salasanan toistoa vielä tarkisteta)
-- Käyttäjä näkee sovelluksen etusivulla listan elokuvista
-- Käyttäjä voi painaa elokuvan nimeä, jolloin siitä näytetään lisätietoja (esim. ohjaaja, valmistumisvuosi) ja sen arvioiden keskiarvo
+- Käyttäjä voi kirjautua sisään ja ulos sekä luoda uuden tunnuksen.
+- Käyttäjä näkee sovelluksen etusivulla listan elokuvista sekä elokuvalle annettujen arvioiden keskiarvon.
+- Käyttäjä voi painaa elokuvan nimeä, jolloin siitä näytetään lisätietoja (esim. ohjaaja, valmistumisvuosi) ja sen arvioiden keskiarvo sekä sille annetut kirjalliset arviot.
+- Käyttäjä voi antaa arvion (numeerinen ja mahdollinen kirjallinen arvio) elokuvasta ja lukea muiden antamia arvioita.
 - Käyttäjä voi etsiä kaikki elokuvat, joiden nimessä on annettu sana.
 
 Puutteita:
-- Vain numeerisia arvioita
 - Ei ylläpitäjä-roolia

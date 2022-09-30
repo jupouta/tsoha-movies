@@ -29,5 +29,6 @@ CREATE TABLE reviews (
     user_id INTEGER REFERENCES users,
     movie_id INTEGER REFERENCES movies,
     star_id INTEGER REFERENCES stars,
-    comment TEXT
+    comment TEXT,
+    posted_at TIMESTAMP
 );

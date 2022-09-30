@@ -15,7 +15,6 @@ class Actions:
 
     def check_user(self, username):
         result = self.database.get_user(username)
-        print(result)
         return result
 
     def check_password_in_hash(self, user_password, given_password):
@@ -23,10 +22,8 @@ class Actions:
 
     def get_movies(self):
         result = self.database.get_movies()
-        print(result)
         return result
 
-    # TODO: refactor these
     def get_movie_names(self):
         result = [movie.name for movie in self.database.get_movie_names()]
         return result
@@ -40,11 +37,27 @@ class Actions:
 
     def give_star_review(self, user, stars, movie_id):
         if self.database.get_star_review_by_user(user, movie_id):
-            self.database.update_star_review_by_user(user, movie_id, stars)
+            star_id = self.database.update_star_review_by_user(user, movie_id, stars)
         else:
-            self.database.add_new_star_review(user, int(stars), movie_id)
+            star_id = self.database.add_new_star_review(user, int(stars), movie_id)
+        return star_id
+
+    def give_review(self, stars, review, movie_id, user_id):
+        star_id = self.give_star_review(user_id, stars, movie_id)
+
+        # TODO: mitä jos sama käyttäjä lisää kommentin?
+        if review != '':
+            self.database.add_new_review(user_id, star_id, review, movie_id)
 
     def get_stars_for_movie(self, movie_id):
         result = self.database.get_stars_for_movie(movie_id)
         print(result)
         return result[0]
+
+    def get_star_count_for_movie(self, movie_id):
+        result = self.database.get_star_count_for_movie(movie_id)
+        return result['count']
+
+    def get_reviews_for_movie(self, movie_id):
+        result = self.database.get_reviews_for_movie(movie_id)
+        return result

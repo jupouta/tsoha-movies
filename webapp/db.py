@@ -17,11 +17,11 @@ class Database:
         self.db.session.commit()
 
     def get_movies(self):
-        result = self.db.session.execute('SELECT * FROM movies;')
+        result = self.db.session.execute('SELECT m.name, ROUND(AVG(s.stars), 2) AS star_aver\
+            FROM movies AS m, stars AS s WHERE m.id=s.movie_id GROUP BY m.name;')
         movies = result.fetchall()
         return movies
 
-    # TODO: refactor these
     def get_movie_names(self):
         result = self.db.session.execute('SELECT name FROM movies;')
         movies = result.fetchall()
@@ -38,9 +38,11 @@ class Database:
         return movie
 
     def add_new_star_review(self, user_id, stars, movie_id):
-        self.db.session.execute('INSERT INTO stars (user_id, stars, movie_id) VALUES (:user_id, :stars, :movie_id)',
+        result = self.db.session.execute('INSERT INTO stars (user_id, stars, movie_id) VALUES (:user_id, :stars, :movie_id) RETURNING id',
                                          {'user_id':user_id, 'stars':stars, 'movie_id':movie_id})
+        star_id = result.fetchone()[0]
         self.db.session.commit()
+        return star_id
 
     def get_star_review_by_user(self, user, movie_id):
         result = self.db.session.execute('SELECT stars FROM stars WHERE movie_id=:movie_id AND user_id=:user_id;',
@@ -49,13 +51,30 @@ class Database:
         return star
 
     def update_star_review_by_user(self, user, movie_id, stars):
-        self.db.session.execute('UPDATE stars SET stars=:stars WHERE user_id=:user_id AND movie_id=:movie_id',
+        result = self.db.session.execute('UPDATE stars SET stars=:stars WHERE user_id=:user_id AND movie_id=:movie_id RETURNING id',
                                       {'stars':stars, 'user_id':user, 'movie_id':movie_id})
+        star_id = result.fetchone()[0]
         self.db.session.commit()
+        return star_id
 
     def get_stars_for_movie(self, movie_id):
-        result = self.db.session.execute('SELECT ROUND(AVG(stars), 2) FROM STARS WHERE movie_id=:movie_id;', {'movie_id':movie_id})
+        result = self.db.session.execute('SELECT ROUND(AVG(stars), 2) FROM stars WHERE movie_id=:movie_id;', {'movie_id':movie_id})
         stars_avg = result.fetchone()
         return stars_avg
 
+    def get_star_count_for_movie(self, movie_id):
+        result = self.db.session.execute('SELECT COUNT(*) FROM stars WHERE movie_id=:movie_id;', {'movie_id':movie_id})
+        stars_count = result.fetchone()
+        return stars_count
+
+    def add_new_review(self, user_id, star_id, review, movie_id):
+        self.db.session.execute('INSERT INTO reviews (user_id, movie_id, star_id, comment, posted_at) VALUES (:user_id, :movie_id, :star_id, :comment, NOW())',
+                                {'user_id':user_id, 'movie_id':movie_id, 'star_id':star_id, 'comment':review})
+        self.db.session.commit()
+
+    def get_reviews_for_movie(self, movie_id):
+        result = self.db.session.execute('SELECT r.comment, r.posted_at, u.username FROM reviews r, users u WHERE movie_id=:movie_id AND r.user_id=u.id',
+                                         {'movie_id':movie_id})
+        reviews = result.fetchall()
+        return reviews
 

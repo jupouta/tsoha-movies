@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
 {% if stars %}
-<h3>{{ movie.name }} {{ stars }} ⭐️</h3>
+<h3>{{ movie.name }} {{ stars }} ⭐️ {{ total_stars }} arviota</h3>
 {% else %}
 <h3>{{ movie.name }}</h3>
 {% endif %}
@@ -10,7 +10,7 @@
 <p>Kuvaus: {{ movie.description }}</p>
 
 {% if session.user %}
-<p>Anna arvio:
+<p><h3>Anna arvio:</h3>
     <form action="/movies/{{ movie.id }}" method="POST">
     <select name="stars">
         <option value="1"> 1
@@ -19,9 +19,23 @@
         <option value="4"> 4
         <option value="5"> 5
     </select>
+    <br>
+    Kirjallinen arvio: <br>
+    <br>
+    <textarea name="review" rows="5" cols="40"></textarea>
+    <br>
     <button type="submit" class="button">Anna arvio elokuvalle</button>
     </form>
 </p>
+
+<h3>Elokuvalle annetut arviot</h3>
+<hr>
+{% for review in reviews %}
+    {{ review.posted_at }} {{ review.username }}<br>
+    <em>{{ review.comment }}</em><br>
+{% endfor %}
+</hr>
+
 {% else %}
 <p><a href="/login">Kirjaudu sisään antaaksesi arvion</a></p>
 {% endif %}

@@ -6,7 +6,7 @@ actions = Actions()
 
 @app.route("/")
 def index():
-    movies = actions.get_movie_names()
+    movies = actions.get_movies()
     return render_template("index.html", movies=movies)
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -35,7 +35,7 @@ def logout():
     del session['user']
     return redirect('/')
 
-@app.route('/register', methods=["GET", "POST"])
+@app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'GET':
         return render_template('register.html')
@@ -43,10 +43,15 @@ def register():
         username = request.form['user']
         password = request.form['password']
         password_again = request.form['password2']
-        # TODO: check passwords are the same
-        actions.add_new_user(username, password)
 
-        return redirect("/")
+        if not actions.check_user(username):
+            if password != password_again:
+                return render_template('error.html', error_message='Salasanat eroavat. Tarkista molemmat salasanat.')
+            else:
+                actions.add_new_user(username, password)
+                return redirect('/')
+        else:
+            return render_template('error.html', error_message='Käyttäjä löytyy jo. Valitse uusi käyttäjätunnus.')
 
 @app.route('/movies')
 def query():
@@ -58,19 +63,25 @@ def query():
         movies = actions.get_movies()
         return render_template('movies.html', movies=movies)
 
-@app.route('/movies/<int:id>', methods=["GET", "POST"])
+@app.route('/movies/<int:id>', methods=['GET', 'POST'])
 def movie(id):
     if request.method == 'POST':
         stars = request.form.get('stars')
+        review = request.form.get('review')
         try:
-            print(session['user'], id)
-            actions.give_star_review(session['user'], stars, id)
+            actions.give_review(stars, review, id, session['user'])
         except:
             return render_template('error.html', error_message='Et ole kirjautunut')
 
     movie = actions.find_movie_by_id(id)
     all_stars = actions.get_stars_for_movie(id)
-    return render_template('movie.html', movie=movie, stars=all_stars)
+    total_stars = actions.get_star_count_for_movie(id)
+    reviews = actions.get_reviews_for_movie(id)
+    return render_template('movie.html',
+                           movie=movie,
+                           stars=all_stars,
+                           total_stars=total_stars,
+                           reviews=reviews)
 
 @app.route("/test")
 def test():
