@@ -29,7 +29,7 @@ class Actions:
         return result
 
     def find_movies_by_name(self, name):
-        return self.database.find_movies_by_name(name)
+        return self.database.find_movies_by_name(name.lower())
 
     def find_movie_by_id(self, id):
         result = self.database.find_movie_by_id(id)

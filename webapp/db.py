@@ -29,7 +29,7 @@ class Database:
         return movies
 
     def find_movies_by_name(self, name):
-        result = self.db.session.execute('SELECT * FROM movies WHERE name LIKE :name;', {'name':'%'+name+'%'})
+        result = self.db.session.execute('SELECT * FROM movies WHERE LOWER(name) LIKE :name;', {'name':'%'+name+'%'})
         movies = result.fetchall()
         return movies
 
