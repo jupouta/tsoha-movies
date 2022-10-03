@@ -74,13 +74,9 @@ def movie(id):
             return render_template('error.html', error_message='Et ole kirjautunut')
 
     movie = actions.find_movie_by_id(id)
-    all_stars = actions.get_stars_for_movie(id)
-    total_stars = actions.get_star_count_for_movie(id)
     reviews = actions.get_reviews_for_movie(id)
     return render_template('movie.html',
                            movie=movie,
-                           stars=all_stars,
-                           total_stars=total_stars,
                            reviews=reviews)
 
 @app.route("/test")

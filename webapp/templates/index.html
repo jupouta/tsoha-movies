@@ -12,7 +12,12 @@
 <h2>Elokuvat</h2>
 <ul>
 {% for movie in movies %}
-<li> <a href="/movies/{{ movie.id }}">{{ movie.name }} ⭐️ {{ movie.star_aver }}</a>
+
+{% if movie.star_aver %}
+<li> <a href="/movies/{{ movie.id }}">{{ movie.name }}</a> ⭐️ {{ movie.star_aver }}
+{% else %}
+<li> <a href="/movies/{{ movie.id }}">{{ movie.name }}</a>
+{% endif %}
 {% endfor %}
 </ul>
 

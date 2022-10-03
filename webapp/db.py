@@ -20,6 +20,7 @@ class Database:
         result = self.db.session.execute('SELECT m.name, ROUND(AVG(s.stars), 2) AS star_aver\
             FROM movies AS m, stars AS s WHERE m.id=s.movie_id GROUP BY m.name;')
         movies = result.fetchall()
+        print(movies)
         return movies
 
     def get_movie_names(self):
@@ -32,8 +33,9 @@ class Database:
         movies = result.fetchall()
         return movies
 
-    def find_movie_by_id(self, id):
-        result = self.db.session.execute('SELECT * FROM movies WHERE id=:id;', {'id':id})
+    def find_movie_by_id(self, movie_id):
+        result = self.db.session.execute('SELECT m.name, m.id, m.year, m.director, m.description, ROUND(AVG(s.stars), 2) AS star_avg, COUNT(s.stars) as star_count FROM movies AS m INNER JOIN stars AS s ON s.movie_id = m.id WHERE m.id=movie_id GROUP BY m.id;',
+                                         {'movie_id':movie_id})
         movie = result.fetchone()
         return movie
 
@@ -57,11 +59,13 @@ class Database:
         self.db.session.commit()
         return star_id
 
+    # TODO: delete?
     def get_stars_for_movie(self, movie_id):
         result = self.db.session.execute('SELECT ROUND(AVG(stars), 2) FROM stars WHERE movie_id=:movie_id;', {'movie_id':movie_id})
         stars_avg = result.fetchone()
         return stars_avg
 
+    # TODO: delete?
     def get_star_count_for_movie(self, movie_id):
         result = self.db.session.execute('SELECT COUNT(*) FROM stars WHERE movie_id=:movie_id;', {'movie_id':movie_id})
         stars_count = result.fetchone()

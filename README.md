@@ -12,6 +12,8 @@ Sovelluksen ominaisuuksia:
 - Käyttäjä voi etsiä kaikki elokuvat, joiden nimessä on annettu sana.
 - Käyttäjä näkee myös listan, jossa elokuvat on järjestetty parhaimmasta huonoimpaan arvioiden mukaisesti.
 - Ylläpitäjä voi tarvittaessa poistaa käyttäjän antaman arvion.
+- Elokuvalle tiedoille voi antaa muutospyynnön.
+- Ylläpitäjä voi lukea muutospyyntöjä.
 
 ## Sovellus tällä hetkellä
 
@@ -25,4 +27,4 @@ Tämänhetkiset ominaisuudet:
 - Käyttäjä voi etsiä kaikki elokuvat, joiden nimessä on annettu sana.
 
 Puutteita:
-- Ei ylläpitäjä-roolia
+- Ylläpitäjä-rooli ainoastaan lisätty

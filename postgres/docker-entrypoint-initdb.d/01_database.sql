@@ -6,7 +6,8 @@ DROP TABLE IF EXISTS reviews CASCADE;
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     username TEXT UNIQUE,
-    password TEXT
+    password TEXT,
+    role INTEGER
 );
 
 CREATE TABLE movies (

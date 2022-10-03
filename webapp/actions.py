@@ -49,11 +49,13 @@ class Actions:
         if review != '':
             self.database.add_new_review(user_id, star_id, review, movie_id)
 
+    # TODO: delete?
     def get_stars_for_movie(self, movie_id):
         result = self.database.get_stars_for_movie(movie_id)
         print(result)
         return result[0]
 
+    # TODO: delete?
     def get_star_count_for_movie(self, movie_id):
         result = self.database.get_star_count_for_movie(movie_id)
         return result['count']

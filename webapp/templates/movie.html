@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
-{% if stars %}
-<h3>{{ movie.name }} {{ stars }} ⭐️ {{ total_stars }} arviota</h3>
+{% if movie.star_avg %}
+<h3>{{ movie.name }} {{ movie.star_avg }} ⭐️ {{ movie.star_count }} arviota</h3>
 {% else %}
 <h3>{{ movie.name }}</h3>
 {% endif %}
