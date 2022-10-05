@@ -20,6 +20,12 @@ class Database:
         result = self.db.session.execute('SELECT m.name, m.id, ROUND(AVG(s.stars), 2) AS star_aver\
             FROM movies AS m, stars AS s WHERE m.id=s.movie_id GROUP BY m.id;')
         movies = result.fetchall()
+        print(movies)
+        return movies
+
+    def get_movies_without_stars(self):
+        result = self.db.session.execute('SELECT * FROM movies;')
+        movies = result.fetchall()
         return movies
 
     def get_movie_names(self):
@@ -35,6 +41,11 @@ class Database:
     def find_movie_by_id(self, movie_id):
         result = self.db.session.execute('SELECT m.name, m.id, m.year, m.director, m.description, ROUND(AVG(s.stars), 2) AS star_avg, COUNT(s.stars) as star_count FROM movies AS m INNER JOIN stars AS s ON s.movie_id = m.id WHERE m.id=movie_id GROUP BY m.id;',
                                          {'movie_id':movie_id})
+        movie = result.fetchone()
+        return movie
+
+    def find_movie_by_id_without_stars(self, movie_id):
+        result = self.db.session.execute('SELECT * FROM movies WHERE id=:movie_id;', {'movie_id':movie_id})
         movie = result.fetchone()
         return movie
 

@@ -22,6 +22,8 @@ class Actions:
 
     def get_movies(self):
         result = self.database.get_movies()
+        if not result:
+            result = self.database.get_movies_without_stars()
         return result
 
     def get_movie_names(self):
@@ -33,6 +35,8 @@ class Actions:
 
     def find_movie_by_id(self, id):
         result = self.database.find_movie_by_id(id)
+        if not result:
+            result = self.database.find_movie_by_id_without_stars(id)
         return result
 
     def give_star_review(self, user, stars, movie_id):

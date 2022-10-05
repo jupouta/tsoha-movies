@@ -3,7 +3,7 @@
 {% if movie.star_avg %}
 <h3>{{ movie.name }} {{ movie.star_avg }} ⭐️ {{ movie.star_count }} arviota</h3>
 {% else %}
-<h3>{{ movie.name }}</h3>
+<h3>{{ movie.name }} ⭐️ 0 arviota</h3>
 {% endif %}
 <p>Julkaisuvuosi: {{ movie.year }}</p>
 <p>Ohjaaja: {{ movie.director }}</p>

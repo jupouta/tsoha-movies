@@ -13,13 +13,15 @@
 <ul>
 {% for movie in movies %}
 
-{% if movie.star_aver %}
-<li> <a href="/movies/{{ movie.id }}">{{ movie.name }}</a> ⭐️ {{ movie.star_aver }}
+{% if movie.star_avg %}
+<li> <a href="/movies/{{ movie.id }}">{{ movie.name }}</a> ⭐️ {{ movie.star_avg }}
 {% else %}
 <li> <a href="/movies/{{ movie.id }}">{{ movie.name }}</a>
 {% endif %}
+
 {% endfor %}
 </ul>
+
 
 
 <form action="/movies" method="GET">
