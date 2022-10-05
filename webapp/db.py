@@ -6,7 +6,7 @@ class Database:
         self.db = db
 
     def get_user(self, username):
-        result = self.db.session.execute('SELECT password, id, username FROM users WHERE username=:username;',
+        result = self.db.session.execute('SELECT password, id, username, role FROM users WHERE username=:username;',
                                          {'username':username})
         user = result.fetchone()
         return user
@@ -17,10 +17,9 @@ class Database:
         self.db.session.commit()
 
     def get_movies(self):
-        result = self.db.session.execute('SELECT m.name, ROUND(AVG(s.stars), 2) AS star_aver\
-            FROM movies AS m, stars AS s WHERE m.id=s.movie_id GROUP BY m.name;')
+        result = self.db.session.execute('SELECT m.name, m.id, ROUND(AVG(s.stars), 2) AS star_aver\
+            FROM movies AS m, stars AS s WHERE m.id=s.movie_id GROUP BY m.id;')
         movies = result.fetchall()
-        print(movies)
         return movies
 
     def get_movie_names(self):

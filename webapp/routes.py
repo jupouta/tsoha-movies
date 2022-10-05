@@ -23,6 +23,7 @@ def result():
             if actions.check_password_in_hash(user_password, password):
                 session['user'] = result.id
                 session['username'] = result.username
+                session['role'] = result.role
                 return redirect('/')
             else:
                 return render_template('error.html', error_message='Väärä käyttäjätunnus tai salasana')

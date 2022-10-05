@@ -39,4 +39,10 @@
 {% else %}
 <p><a href="/login">Kirjaudu sisään antaaksesi arvion</a></p>
 {% endif %}
+
+{% if session.role == 1 %}
+<h3>Elokuvalle annetut muokkauspyynnöt</h3>
+<hr>
+{% endif %}
+
 {% endblock %}

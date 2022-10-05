@@ -2,6 +2,7 @@ DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS movies CASCADE;
 DROP TABLE IF EXISTS stars CASCADE;
 DROP TABLE IF EXISTS reviews CASCADE;
+DROP TABLE IF EXISTS requests CASCADE;
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
@@ -31,5 +32,13 @@ CREATE TABLE reviews (
     movie_id INTEGER REFERENCES movies,
     star_id INTEGER REFERENCES stars,
     comment TEXT,
+    posted_at TIMESTAMP
+);
+
+CREATE TABLE requests (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users,
+    movie_id INTEGER REFERENCES movies,
+    request TEXT,
     posted_at TIMESTAMP
 );
