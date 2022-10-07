@@ -1,5 +1,8 @@
 
 
+import re
+
+
 class Database:
 
     def __init__(self, db):
@@ -92,3 +95,13 @@ class Database:
         reviews = result.fetchall()
         return reviews
 
+    def make_request_for_movie(self, request_txt, movie_id, user_id):
+        self.db.session.execute('INSERT INTO requests (user_id, movie_id, request, posted_at) VALUES (:user_id, :movie_id, :request, NOW())',
+                                {'user_id':user_id, 'movie_id':movie_id, 'request':request_txt})
+        self.db.session.commit()
+
+    def get_requests_for_movie(self, movie_id):
+        result = self.db.session.execute('SELECT r.request, r.posted_at, u.username FROM requests r, users u WHERE movie_id=:movie_id AND r.user_id=u.id',
+                                {'movie_id':movie_id})
+        requests = result.fetchall()
+        return requests

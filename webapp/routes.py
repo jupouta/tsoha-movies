@@ -34,6 +34,7 @@ def result():
 @app.route('/logout')
 def logout():
     del session['user']
+    del session['role']
     return redirect('/')
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -58,8 +59,12 @@ def register():
 def query():
     if 'query' in request.args:
         query = request.args['query']
-        movies = actions.find_movies_by_name(query)
-        return render_template('movies.html', movies=movies)
+        # TODO: validate query
+        if query:
+            movies = actions.find_movies_by_name(query)
+            return render_template('movies.html', movies=movies)
+        else:
+            return render_template('error.html', error_message='Haku on viallinen, tarkista muoto')
     else:
         movies = actions.get_movies()
         return render_template('movies.html', movies=movies)
@@ -69,16 +74,22 @@ def movie(id):
     if request.method == 'POST':
         stars = request.form.get('stars')
         review = request.form.get('review')
+        requested = request.form.get('request')
         try:
-            actions.give_review(stars, review, id, session['user'])
+            if stars or review:
+                actions.give_review(stars, review, id, session['user'])
+            if requested:
+                actions.make_request(requested, id, session['user'])
         except:
             return render_template('error.html', error_message='Et ole kirjautunut')
 
     movie = actions.find_movie_by_id(id)
     reviews = actions.get_reviews_for_movie(id)
+    requests = actions.get_requests_for_movie(id)
     return render_template('movie.html',
                            movie=movie,
-                           reviews=reviews)
+                           reviews=reviews,
+                           requests=requests)
 
 @app.route("/test")
 def test():

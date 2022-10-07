@@ -67,3 +67,10 @@ class Actions:
     def get_reviews_for_movie(self, movie_id):
         result = self.database.get_reviews_for_movie(movie_id)
         return result
+
+    def make_request(self, request_txt, movie_id, user_id):
+        self.database.make_request_for_movie(request_txt, movie_id, user_id)
+
+    def get_requests_for_movie(self, movie_id):
+        result = self.database.get_requests_for_movie(movie_id)
+        return result

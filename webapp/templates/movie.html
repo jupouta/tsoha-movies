@@ -10,6 +10,7 @@
 <p>Kuvaus: {{ movie.description }}</p>
 
 {% if session.user %}
+<hr>
 <p><h3>Anna arvio:</h3>
     <form action="/movies/{{ movie.id }}" method="POST">
     <select name="stars">
@@ -28,20 +29,38 @@
     </form>
 </p>
 
-<h3>Elokuvalle annetut arviot</h3>
 <hr>
+<p>
+<h3>Elokuvalle annetut arviot</h3>
 {% for review in reviews %}
     {{ review.posted_at }} {{ review.username }}<br>
     <em>{{ review.comment }}</em><br>
 {% endfor %}
-</hr>
+</p>
+
+<hr>
+<h3>Anna elokuvalle muokkauspyyntö</h3>
+<form action="/movies/{{ movie.id }}" method="POST">
+    Muokkauspyyntö: <br>
+    <br>
+    <textarea name="request" rows="5" cols="40"></textarea>
+    <br>
+    <button type="submit" class="button">Lähetä muokkauspyyntö</button>
+</form>
 
 {% else %}
+<hr>
 <p><a href="/login">Kirjaudu sisään antaaksesi arvion</a></p>
 {% endif %}
 
 {% if session.role == 1 %}
+<hr>
 <h3>Elokuvalle annetut muokkauspyynnöt</h3>
+{% for request in requests %}
+    {{ request.posted_at }} {{ request.username }}<br>
+    <em>{{ request.request }}</em><br>
+{% endfor %}
+
 <hr>
 {% endif %}
 

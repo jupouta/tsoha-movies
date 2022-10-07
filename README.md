@@ -25,6 +25,9 @@ Tämänhetkiset ominaisuudet:
 - Käyttäjä voi painaa elokuvan nimeä, jolloin siitä näytetään lisätietoja (esim. ohjaaja, valmistumisvuosi) ja sen arvioiden keskiarvo sekä sille annetut kirjalliset arviot.
 - Käyttäjä voi antaa arvion (numeerinen ja mahdollinen kirjallinen arvio) elokuvasta ja lukea muiden antamia arvioita.
 - Käyttäjä voi etsiä kaikki elokuvat, joiden nimessä on annettu sana.
+- Käyttäjä voi laittaa elokuvan tiedoista muutospyynnön.
+- Ylläpitäjä voi lukea muutospyyntöjä.
 
 Puutteita:
-- Ylläpitäjä-rooli ainoastaan lisätty
+- Elokuvan tietoja ei voi päivittää
+- Syötteiden tarkistaminen vielä vaiheessa
