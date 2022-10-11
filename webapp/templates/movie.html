@@ -9,6 +9,10 @@
 <p>Ohjaaja: {{ movie.director }}</p>
 <p>Kuvaus: {{ movie.description }}</p>
 
+{% if session.role == 1 %}
+<p>Muokkaa elokuvan tietoja <a href="/modify/{{ movie.id }}">täällä</a></p>
+{% endif %}
+
 {% if session.user %}
 <hr>
 <p><h3>Anna arvio:</h3>

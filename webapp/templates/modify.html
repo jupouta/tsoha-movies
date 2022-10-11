@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block content %}
+<p>Muokkaa elokuvan <b>{{ movie.name }}</b> tietoja</p>
+<form action="/modify/{{ movie.id }}" method="POST">
+Nimi:
+<input type="text" name="name" minlength="2" value="{{ movie.name }}" size="30" required>
+<br>
+Ohjaaja:
+<input type="text" name="director" minlength="2" value="{{ movie.director }}" size="30" required>
+<br>
+Julkaisuvuosi:
+<input type="text" name="year" minlength="4" maxlength="4" value="{{ movie.year }}" size="30" required>
+<br>
+Kuvaus:
+<textarea name="description" rows="3" cols="30" minlength="2" required>{{ movie.description }}</textarea>
+<br>
+<input type="submit" value="Muuta tietoja">
+</form>
+
+
+{% endblock %}

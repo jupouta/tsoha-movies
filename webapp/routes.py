@@ -4,10 +4,10 @@ from flask import render_template, request, redirect, session
 from .actions import Actions
 actions = Actions()
 
-@app.route("/")
+@app.route('/')
 def index():
     movies = actions.get_movies()
-    return render_template("index.html", movies=movies)
+    return render_template('index.html', movies=movies)
 
 @app.route('/login', methods=['GET', 'POST'])
 def result():
@@ -90,6 +90,23 @@ def movie(id):
                            movie=movie,
                            reviews=reviews,
                            requests=requests)
+
+@app.route('/modify/<int:id>', methods=['GET', 'POST'])
+def modify_movie(id):
+    if request.method == 'POST':
+        name = request.form.get('name')
+        director = request.form.get('director')
+        year = request.form.get('year')
+        description = request.form.get('description')
+        print(name)
+        print(director)
+        print(year)
+        print(description)
+        actions.update_movie_info(name, director, year, description, id)
+
+    movie = actions.find_movie_by_id(id)
+    return render_template('modify.html', movie=movie)
+
 
 @app.route("/test")
 def test():

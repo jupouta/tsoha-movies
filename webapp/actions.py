@@ -74,3 +74,6 @@ class Actions:
     def get_requests_for_movie(self, movie_id):
         result = self.database.get_requests_for_movie(movie_id)
         return result
+
+    def update_movie_info(self, name, director, year, description, movie_id):
+        self.database.update_movie_info(name, director, year, description, movie_id)

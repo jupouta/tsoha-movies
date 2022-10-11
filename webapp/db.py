@@ -1,8 +1,4 @@
 
-
-import re
-
-
 class Database:
 
     def __init__(self, db):
@@ -20,12 +16,12 @@ class Database:
         self.db.session.commit()
 
     def get_movies(self):
-        result = self.db.session.execute('SELECT m.name, m.id, ROUND(AVG(s.stars), 2) AS star_aver\
-            FROM movies AS m, stars AS s WHERE m.id=s.movie_id GROUP BY m.id;')
+        result = self.db.session.execute('SELECT m.*, ROUND(AVG(s.stars), 2) AS star_avg FROM movies AS m LEFT JOIN stars AS s ON m.id=s.movie_id GROUP BY m.id, m.name, m.year, m.director, m.description;')
         movies = result.fetchall()
         print(movies)
         return movies
 
+    # TODO: delete?
     def get_movies_without_stars(self):
         result = self.db.session.execute('SELECT * FROM movies;')
         movies = result.fetchall()
@@ -42,11 +38,12 @@ class Database:
         return movies
 
     def find_movie_by_id(self, movie_id):
-        result = self.db.session.execute('SELECT m.name, m.id, m.year, m.director, m.description, ROUND(AVG(s.stars), 2) AS star_avg, COUNT(s.stars) as star_count FROM movies AS m INNER JOIN stars AS s ON s.movie_id = m.id WHERE m.id=movie_id GROUP BY m.id;',
+        result = self.db.session.execute('SELECT m.*, ROUND(AVG(s.stars), 2) AS star_avg, COUNT(s.stars) as star_count FROM movies AS m LEFT JOIN stars AS s ON m.id=s.movie_id WHERE m.id=:movie_id GROUP BY m.id;',
                                          {'movie_id':movie_id})
         movie = result.fetchone()
         return movie
 
+    # TODO: Delete?
     def find_movie_by_id_without_stars(self, movie_id):
         result = self.db.session.execute('SELECT * FROM movies WHERE id=:movie_id;', {'movie_id':movie_id})
         movie = result.fetchone()
@@ -105,3 +102,11 @@ class Database:
                                 {'movie_id':movie_id})
         requests = result.fetchall()
         return requests
+
+    def update_movie_info(self, name, director, year, description, movie_id):
+        result = self.db.session.execute('UPDATE movies SET name=:name, director=:director, year=:year, description=:description WHERE id=:movie_id RETURNING id',
+                                      {'name':name, 'director':director, 'year':year, 'description':description, 'movie_id':movie_id})
+
+        star_id = result.fetchone()[0]
+        self.db.session.commit()
+        return star_id
