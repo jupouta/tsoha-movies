@@ -16,7 +16,7 @@
 {% if movie.star_avg %}
 <li> <a href="/movies/{{ movie.id }}">{{ movie.name }}</a> ⭐️ {{ movie.star_avg }}
 {% else %}
-<li> <a href="/movies/{{ movie.id }}">{{ movie.name }}</a>
+<li> <a href="/movies/{{ movie.id }}">{{ movie.name }} ⭐️ Ei arvioita</a>
 {% endif %}
 
 {% endfor %}

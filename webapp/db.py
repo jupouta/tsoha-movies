@@ -18,14 +18,13 @@ class Database:
     def get_movies(self):
         result = self.db.session.execute('SELECT m.*, ROUND(AVG(s.stars), 2) AS star_avg FROM movies AS m LEFT JOIN stars AS s ON m.id=s.movie_id GROUP BY m.id, m.name, m.year, m.director, m.description;')
         movies = result.fetchall()
-        print(movies)
         return movies
 
     # TODO: delete?
-    def get_movies_without_stars(self):
-        result = self.db.session.execute('SELECT * FROM movies;')
-        movies = result.fetchall()
-        return movies
+    # def get_movies_without_stars(self):
+    #     result = self.db.session.execute('SELECT * FROM movies;')
+    #     movies = result.fetchall()
+    #     return movies
 
     def get_movie_names(self):
         result = self.db.session.execute('SELECT name FROM movies;')
@@ -44,10 +43,10 @@ class Database:
         return movie
 
     # TODO: Delete?
-    def find_movie_by_id_without_stars(self, movie_id):
-        result = self.db.session.execute('SELECT * FROM movies WHERE id=:movie_id;', {'movie_id':movie_id})
-        movie = result.fetchone()
-        return movie
+    # def find_movie_by_id_without_stars(self, movie_id):
+    #     result = self.db.session.execute('SELECT * FROM movies WHERE id=:movie_id;', {'movie_id':movie_id})
+    #     movie = result.fetchone()
+    #     return movie
 
     def add_new_star_review(self, user_id, stars, movie_id):
         result = self.db.session.execute('INSERT INTO stars (user_id, stars, movie_id) VALUES (:user_id, :stars, :movie_id) RETURNING id',
@@ -70,16 +69,16 @@ class Database:
         return star_id
 
     # TODO: delete?
-    def get_stars_for_movie(self, movie_id):
-        result = self.db.session.execute('SELECT ROUND(AVG(stars), 2) FROM stars WHERE movie_id=:movie_id;', {'movie_id':movie_id})
-        stars_avg = result.fetchone()
-        return stars_avg
+    # def get_stars_for_movie(self, movie_id):
+    #     result = self.db.session.execute('SELECT ROUND(AVG(stars), 2) FROM stars WHERE movie_id=:movie_id;', {'movie_id':movie_id})
+    #     stars_avg = result.fetchone()
+    #     return stars_avg
 
     # TODO: delete?
-    def get_star_count_for_movie(self, movie_id):
-        result = self.db.session.execute('SELECT COUNT(*) FROM stars WHERE movie_id=:movie_id;', {'movie_id':movie_id})
-        stars_count = result.fetchone()
-        return stars_count
+    # def get_star_count_for_movie(self, movie_id):
+    #     result = self.db.session.execute('SELECT COUNT(*) FROM stars WHERE movie_id=:movie_id;', {'movie_id':movie_id})
+    #     stars_count = result.fetchone()
+    #     return stars_count
 
     def add_new_review(self, user_id, star_id, review, movie_id):
         self.db.session.execute('INSERT INTO reviews (user_id, movie_id, star_id, comment, posted_at) VALUES (:user_id, :movie_id, :star_id, :comment, NOW())',

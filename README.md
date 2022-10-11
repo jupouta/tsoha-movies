@@ -28,6 +28,7 @@ Tämänhetkiset ominaisuudet:
 - Käyttäjä voi etsiä kaikki elokuvat, joiden nimessä on annettu sana.
 - Käyttäjä voi laittaa elokuvan tiedoista muutospyynnön.
 - Ylläpitäjä voi lukea muutospyyntöjä.
+- HUOM! Testiylläpitäjän tunnukset 'admintest' ja salasana 'admintest'
 
 Puutteita:
 - Syötteiden tarkistaminen vielä vaiheessa

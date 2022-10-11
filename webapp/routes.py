@@ -98,10 +98,6 @@ def modify_movie(id):
         director = request.form.get('director')
         year = request.form.get('year')
         description = request.form.get('description')
-        print(name)
-        print(director)
-        print(year)
-        print(description)
         actions.update_movie_info(name, director, year, description, id)
 
     movie = actions.find_movie_by_id(id)
