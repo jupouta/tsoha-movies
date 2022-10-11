@@ -27,7 +27,7 @@
     <br>
     Kirjallinen arvio: <br>
     <br>
-    <textarea name="review" rows="5" cols="40"></textarea>
+    <textarea name="review" rows="5" cols="40" minlength="10" maxlength="10000"></textarea>
     <br>
     <button type="submit" class="button">Anna arvio elokuvalle</button>
     </form>
@@ -47,7 +47,7 @@
 <form action="/movies/{{ movie.id }}" method="POST">
     Muokkauspyyntö: <br>
     <br>
-    <textarea name="request" rows="5" cols="40"></textarea>
+    <textarea name="request" rows="5" cols="40" minlength="10" maxlength="10000"></textarea>
     <br>
     <button type="submit" class="button">Lähetä muokkauspyyntö</button>
 </form>

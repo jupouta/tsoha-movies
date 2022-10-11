@@ -3,7 +3,7 @@
 
 {% if session.role == 1 %}
 
-<p>Muokkaa elokuvan <b>{{ movie.name }}</b> tietoja</p>
+<p>Muokkaa elokuvan <b>{{ movie.name }} ({{ movie.year }})</b> tietoja</p>
 <form action="/modify/{{ movie.id }}" method="POST">
 Nimi:
 <input type="text" name="name" minlength="2" value="{{ movie.name }}" size="30" required>
@@ -15,7 +15,7 @@ Julkaisuvuosi:
 <input type="text" name="year" minlength="4" maxlength="4" value="{{ movie.year }}" size="30" required>
 <br>
 Kuvaus:
-<textarea name="description" rows="3" cols="30" minlength="2" required>{{ movie.description }}</textarea>
+<textarea name="description" rows="3" cols="30" minlength="2" maxlength="500" required>{{ movie.description }}</textarea>
 <br>
 <input type="submit" value="Muuta tietoja">
 </form>
