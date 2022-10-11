@@ -24,10 +24,10 @@ Tämänhetkiset ominaisuudet:
 - Käyttäjä näkee sovelluksen etusivulla listan elokuvista sekä elokuvalle annettujen arvioiden keskiarvon.
 - Käyttäjä voi painaa elokuvan nimeä, jolloin siitä näytetään lisätietoja (esim. ohjaaja, valmistumisvuosi) ja sen arvioiden keskiarvo sekä sille annetut kirjalliset arviot.
 - Käyttäjä voi antaa arvion (numeerinen ja mahdollinen kirjallinen arvio) elokuvasta ja lukea muiden antamia arvioita.
+- Ylläpitäjä voi muuttaa elokuvasta näytettäviä tietoja.
 - Käyttäjä voi etsiä kaikki elokuvat, joiden nimessä on annettu sana.
 - Käyttäjä voi laittaa elokuvan tiedoista muutospyynnön.
 - Ylläpitäjä voi lukea muutospyyntöjä.
 
 Puutteita:
-- Elokuvan tietoja ei voi päivittää
 - Syötteiden tarkistaminen vielä vaiheessa
