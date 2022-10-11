@@ -1,5 +1,8 @@
 {% extends "layout.html" %}
 {% block content %}
+
+{% if session.role == 1 %}
+
 <p>Muokkaa elokuvan <b>{{ movie.name }}</b> tietoja</p>
 <form action="/modify/{{ movie.id }}" method="POST">
 Nimi:
@@ -17,5 +20,5 @@ Kuvaus:
 <input type="submit" value="Muuta tietoja">
 </form>
 
-
+{% endif %}
 {% endblock %}

@@ -18,15 +18,14 @@ def result():
         result = actions.check_user(user)
         if not result:  # invalid user
             return render_template('error.html', error_message='Käyttäjää ei löytynyt')
-        else:
-            user_password = result.password
-            if actions.check_password_in_hash(user_password, password):
-                session['user'] = result.id
-                session['username'] = result.username
-                session['role'] = result.role
-                return redirect('/')
-            else:
-                return render_template('error.html', error_message='Väärä käyttäjätunnus tai salasana')
+
+        user_password = result.password
+        if actions.check_password_in_hash(user_password, password):
+            session['user'] = result.id
+            session['username'] = result.username
+            session['role'] = result.role
+            return redirect('/')
+        return render_template('error.html', error_message='Väärä käyttäjätunnus tai salasana')
 
     return render_template('login.html')
 
@@ -34,6 +33,7 @@ def result():
 @app.route('/logout')
 def logout():
     del session['user']
+    del session['username']
     del session['role']
     return redirect('/')
 
@@ -41,19 +41,19 @@ def logout():
 def register():
     if request.method == 'GET':
         return render_template('register.html')
-    else:
-        username = request.form['user']
-        password = request.form['password']
-        password_again = request.form['password2']
 
-        if not actions.check_user(username):
-            if password != password_again:
-                return render_template('error.html', error_message='Salasanat eroavat. Tarkista molemmat salasanat.')
-            else:
-                actions.add_new_user(username, password)
-                return redirect('/')
-        else:
-            return render_template('error.html', error_message='Käyttäjä löytyy jo. Valitse uusi käyttäjätunnus.')
+    username = request.form['user']
+    password = request.form['password']
+    password_again = request.form['password2']
+
+    if not actions.check_user(username):
+        if password != password_again:
+            return render_template('error.html', error_message='Salasanat eroavat. Tarkista molemmat salasanat.')
+
+        actions.add_new_user(username, password)
+        return redirect('/')
+
+    return render_template('error.html', error_message='Käyttäjä löytyy jo. Valitse uusi käyttäjätunnus.')
 
 @app.route('/movies')
 def query():
@@ -82,18 +82,21 @@ def movie(id):
                 actions.make_request(requested, id, session['user'])
         except:
             return render_template('error.html', error_message='Et ole kirjautunut')
-
     movie = actions.find_movie_by_id(id)
-    reviews = actions.get_reviews_for_movie(id)
-    requests = actions.get_requests_for_movie(id)
-    return render_template('movie.html',
+    if movie:
+        # TODO: yhdistä selectit?
+        reviews = actions.get_reviews_for_movie(id)
+        requests = actions.get_requests_for_movie(id)
+        return render_template('movie.html',
                            movie=movie,
                            reviews=reviews,
                            requests=requests)
+    return render_template('error.html', error_message='Tulit virheelliselle sivulle.')
 
 @app.route('/modify/<int:id>', methods=['GET', 'POST'])
 def modify_movie(id):
     if request.method == 'POST':
+        # TODO: validate
         name = request.form.get('name')
         director = request.form.get('director')
         year = request.form.get('year')
@@ -101,9 +104,11 @@ def modify_movie(id):
         actions.update_movie_info(name, director, year, description, id)
 
     movie = actions.find_movie_by_id(id)
-    return render_template('modify.html', movie=movie)
+    if movie:
+        return render_template('modify.html', movie=movie)
+    return render_template('error.html', error_message='Tulit virheelliselle sivulle.')
 
-
+# TODO: delete
 @app.route("/test")
 def test():
     return "Hello world"

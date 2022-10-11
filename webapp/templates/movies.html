@@ -1,8 +1,16 @@
-<!DOCTYPE html>
-<link rel="stylesheet" href="static/style.css">
+{% extends "layout.html" %}
+{% block content %}
+
 <h3>Elokuvat</h3>
+{% if movies %}
 <ul>
 {% for movie in movies %}
 <li><a href="/movies/{{ movie.id }}">{{ movie.name }}</a></li>
 {% endfor %}
 </ul>
+{% else %}
+<p>Elokuvia ei löytynyt haulla</p>
+<p>Palaa takaisin <a href="/">hakuun</a></p>
+
+{% endif %}
+{% endblock %}
