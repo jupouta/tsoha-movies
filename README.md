@@ -31,4 +31,6 @@ Tämänhetkiset ominaisuudet:
 - HUOM! Testiylläpitäjän tunnukset 'admintest' ja salasana 'admintest'
 
 Puutteita:
+- Ylläpitäjä ei voi lisätä ja poistaa elokuvia eikä käyttäjien antamia arvioita
+- Käyttäjä ei voi nähdä listaa, jossa elokuvat on järjestetty parhaimmasta huonompaan
 - Syötteiden tarkistaminen vielä vaiheessa
