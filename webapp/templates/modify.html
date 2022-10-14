@@ -18,6 +18,7 @@ Kuvaus:
 <textarea name="description" rows="3" cols="30" minlength="2" maxlength="500" required>{{ movie.description }}</textarea>
 <br>
 <input type="submit" value="Muuta tietoja">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 
 {% endif %}

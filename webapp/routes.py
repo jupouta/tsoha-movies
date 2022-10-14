@@ -1,5 +1,7 @@
+import os
+
 from flask import current_app as app
-from flask import render_template, request, redirect, session, Response
+from flask import render_template, request, redirect, session, Response, abort
 
 from .actions import Actions
 actions = Actions()
@@ -24,6 +26,7 @@ def result():
             session['user'] = result.id
             session['username'] = result.username
             session['role'] = result.role
+            session['csrf_token'] = os.urandom(16).hex()
             return redirect('/')
         return render_template('error.html', error_message='Väärä käyttäjätunnus tai salasana')
 
@@ -35,6 +38,7 @@ def logout():
     del session['user']
     del session['username']
     del session['role']
+    del session['csrf_token']
     return redirect('/')
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -75,7 +79,11 @@ def movie(id):
         stars = request.form.get('stars')
         review = request.form.get('review')
         requested = request.form.get('request')
+        form_csrf_token = request.form.get('csrf')
+
         try:
+            if not actions.check_csrf_token(session['csrf_token'], form_csrf_token):
+                abort(403)
             if stars or review:
                 actions.give_review(stars, review, id, session['user'])
             if requested:
@@ -99,7 +107,6 @@ def remove_review(movie_id, review_id):
     actions.delete_review_for_movie(review_id)
     return Response('OK', status=302, mimetype='application/json')
 
-
     # movie = actions.find_movie_by_id(movie_id)
     # reviews = actions.get_reviews_for_movie(movie_id)
     # requests = actions.get_requests_for_movie(movie_id)
@@ -112,6 +119,10 @@ def remove_review(movie_id, review_id):
 @app.route('/modify/<int:id>', methods=['GET', 'POST'])
 def modify_movie(id):
     if request.method == 'POST':
+        form_csrf_token = request.form.get('csrf')
+        if not actions.check_csrf_token(session['csrf_token'], form_csrf_token):
+            abort(403)
+
         # TODO: validate
         name = request.form.get('name')
         director = request.form.get('director')

@@ -81,3 +81,6 @@ class Actions:
     def delete_review_for_movie(self, review_id):
         return self.database.delete_review_for_movie(review_id)
 
+    def check_csrf_token(self, csrf_token, validate_token):
+        return csrf_token != validate_token
+

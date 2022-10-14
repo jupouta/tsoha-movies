@@ -30,6 +30,7 @@
     <textarea name="review" rows="5" cols="40" minlength="10" maxlength="10000"></textarea>
     <br>
     <button type="submit" class="button">Anna arvio elokuvalle</button>
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
     </form>
 </p>
 
