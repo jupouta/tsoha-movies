@@ -1,5 +1,5 @@
 from flask import current_app as app
-from flask import render_template, request, redirect, session
+from flask import render_template, request, redirect, session, Response
 
 from .actions import Actions
 actions = Actions()
@@ -88,10 +88,26 @@ def movie(id):
         reviews = actions.get_reviews_for_movie(id)
         requests = actions.get_requests_for_movie(id)
         return render_template('movie.html',
+                           base_url=request.root_url,
                            movie=movie,
                            reviews=reviews,
                            requests=requests)
     return render_template('error.html', error_message='Tulit virheelliselle sivulle.')
+
+@app.route('/movies/<int:movie_id>/reviews/<int:review_id>', methods=['DELETE'])
+def remove_review(movie_id, review_id):
+    actions.delete_review_for_movie(review_id)
+    return Response('OK', status=302, mimetype='application/json')
+
+
+    # movie = actions.find_movie_by_id(movie_id)
+    # reviews = actions.get_reviews_for_movie(movie_id)
+    # requests = actions.get_requests_for_movie(movie_id)
+    # return render_template('movie.html',
+    #                     base_url=request.root_url,
+    #                     movie=movie,
+    #                     reviews=reviews,
+    #                     requests=requests)
 
 @app.route('/modify/<int:id>', methods=['GET', 'POST'])
 def modify_movie(id):

@@ -86,7 +86,7 @@ class Database:
         self.db.session.commit()
 
     def get_reviews_for_movie(self, movie_id):
-        result = self.db.session.execute('SELECT r.comment, r.posted_at, u.username FROM reviews r, users u WHERE movie_id=:movie_id AND r.user_id=u.id',
+        result = self.db.session.execute('SELECT r.id, r.comment, r.posted_at, u.username FROM reviews r, users u WHERE movie_id=:movie_id AND r.user_id=u.id',
                                          {'movie_id':movie_id})
         reviews = result.fetchall()
         return reviews
@@ -109,3 +109,10 @@ class Database:
         star_id = result.fetchone()[0]
         self.db.session.commit()
         return star_id
+
+    def delete_review_for_movie(self, review_id):
+        result = self.db.session.execute('DELETE FROM reviews WHERE id=:review_id;',
+                                {'review_id': review_id})
+        self.db.session.commit()
+        return result
+

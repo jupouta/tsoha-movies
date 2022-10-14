@@ -77,3 +77,7 @@ class Actions:
 
     def update_movie_info(self, name, director, year, description, movie_id):
         self.database.update_movie_info(name, director, year, description, movie_id)
+
+    def delete_review_for_movie(self, review_id):
+        return self.database.delete_review_for_movie(review_id)
+

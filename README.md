@@ -26,11 +26,12 @@ Tämänhetkiset ominaisuudet:
 - Käyttäjä voi antaa arvion (numeerinen ja mahdollinen kirjallinen arvio) elokuvasta ja lukea muiden antamia arvioita.
 - Ylläpitäjä voi muuttaa elokuvasta näytettäviä tietoja.
 - Käyttäjä voi etsiä kaikki elokuvat, joiden nimessä on annettu sana.
+- Ylläpitäjä voi poistaa käyttäjän antaman arvion.
 - Käyttäjä voi laittaa elokuvan tiedoista muutospyynnön.
 - Ylläpitäjä voi lukea muutospyyntöjä.
 - HUOM! Testiylläpitäjän tunnukset 'admintest' ja salasana 'admintest'
 
 Puutteita:
-- Ylläpitäjä ei voi lisätä ja poistaa elokuvia eikä käyttäjien antamia arvioita
+- Ylläpitäjä ei voi lisätä eikä poistaa elokuvia
 - Käyttäjä ei voi nähdä listaa, jossa elokuvat on järjestetty parhaimmasta huonompaan
 - Syötteiden tarkistaminen vielä vaiheessa

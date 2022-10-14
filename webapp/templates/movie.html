@@ -36,11 +36,51 @@
 <hr>
 <p>
 <h3>Elokuvalle annetut arviot</h3>
+<div id="_reviews">
 {% for review in reviews %}
+<div>
+    {% if session.role == 1 %}
+    {{ review.posted_at }} {{ review.username }}<br>
+    <em>{{ review.comment }}</em>
+    <input id="_review_{{ review.id }}" type="checkbox" value="{{ review.id }}"><br>
+
+    {% else %}
     {{ review.posted_at }} {{ review.username }}<br>
     <em>{{ review.comment }}</em><br>
+    {% endif %}
+</div>
 {% endfor %}
+{% if session.role == 1 %}
+<button onclick="remove('{{base_url}}',{{ movie.id }})">Poista arvioita</button>
+{% endif %}
+</div>
 </p>
+
+<script>
+function remove(url,movie_id) {
+    const x = document.getElementById('_reviews')
+    const y = x.getElementsByTagName('input')
+    const ids = Array.from(y).filter(i => i.checked).map(i => i.value)
+    console.log(ids)
+
+    if (ids.length == 0) {
+        alert('Valitse vähintään yksi poistettava arvio')
+    }
+
+    ids.forEach(
+        review_id => fetch(url + 'movies/' + movie_id + '/reviews/' + review_id,
+        {
+            method: 'DELETE',
+            headers: {
+                'Content-type': 'application/json'
+            }
+        })
+    )
+
+    window.location.reload(true)
+
+}
+</script>
 
 <hr>
 <h3>Anna elokuvalle muokkauspyyntö</h3>
