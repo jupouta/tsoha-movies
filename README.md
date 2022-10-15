@@ -5,12 +5,11 @@ Käyttäjä on joko peruskäyttäjä tai ylläpitäjä.
 
 Sovelluksen ominaisuuksia:
 - Käyttäjä voi kirjautua sisään ja ulos sekä luoda uuden tunnuksen.
-- Käyttäjä näkee sovelluksen etusivulla listan elokuvista sekä elokuvalle annettujen arvioiden keskiarvon.
+- Käyttäjä näkee sovelluksen etusivulla listan elokuvista järjestettynä parhaimmasta huonoimpaan arvioiden mukaisesti.
 - Käyttäjä voi painaa elokuvan nimeä, jolloin siitä näytetään lisätietoja (esim. ohjaaja, valmistumisvuosi) ja käyttäjien sille antamat kirjalliset arviot.
 - Käyttäjä voi antaa arvion (numeerinen ja mahdollinen kirjallinen arvio) elokuvasta ja lukea muiden antamia arvioita.
 - Ylläpitäjä voi lisätä ja poistaa elokuvia sekä määrittää elokuvasta näytettävät tiedot.
 - Käyttäjä voi etsiä kaikki elokuvat, joiden nimessä on annettu sana.
-- Käyttäjä näkee myös listan, jossa elokuvat on järjestetty parhaimmasta huonoimpaan arvioiden mukaisesti.
 - Ylläpitäjä voi tarvittaessa poistaa käyttäjän antaman arvion.
 - Käyttäjä voi laittaa elokuvan tiedoista muutospyynnön.
 - Ylläpitäjä voi lukea muutospyyntöjä.
@@ -21,7 +20,7 @@ Sovelluksen ominaisuuksia:
 
 Tämänhetkiset ominaisuudet:
 - Käyttäjä voi kirjautua sisään ja ulos sekä luoda uuden tunnuksen.
-- Käyttäjä näkee sovelluksen etusivulla listan elokuvista sekä elokuvalle annettujen arvioiden keskiarvon.
+- Käyttäjä näkee sovelluksen etusivulla 20 parasta elokuvaa sekä elokuvalle annettujen arvioiden keskiarvon.
 - Käyttäjä voi painaa elokuvan nimeä, jolloin siitä näytetään lisätietoja (esim. ohjaaja, valmistumisvuosi) ja sen arvioiden keskiarvo sekä sille annetut kirjalliset arviot.
 - Käyttäjä voi antaa arvion (numeerinen ja mahdollinen kirjallinen arvio) elokuvasta ja lukea muiden antamia arvioita.
 - Ylläpitäjä voi muuttaa elokuvasta näytettäviä tietoja.
@@ -33,5 +32,4 @@ Tämänhetkiset ominaisuudet:
 
 Puutteita:
 - Ylläpitäjä ei voi lisätä eikä poistaa elokuvia
-- Käyttäjä ei voi nähdä listaa, jossa elokuvat on järjestetty parhaimmasta huonompaan
 - Syötteiden tarkistaminen vielä vaiheessa

@@ -8,7 +8,7 @@ actions = Actions()
 
 @app.route('/')
 def index():
-    movies = actions.get_movies()
+    movies = actions.get_movies_in_order()
     return render_template('index.html', movies=movies)
 
 @app.route('/login', methods=['GET', 'POST'])

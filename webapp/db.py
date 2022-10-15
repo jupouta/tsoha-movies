@@ -20,6 +20,11 @@ class Database:
         movies = result.fetchall()
         return movies
 
+    def get_movies_in_order(self):
+        result = self.db.session.execute('SELECT m.*, ROUND(AVG(s.stars), 2) AS star_avg FROM movies AS m LEFT JOIN stars AS s ON m.id=s.movie_id GROUP BY m.id, m.name, m.year, m.director, m.description ORDER BY star_avg DESC NULLS LAST LIMIT 20;')
+        movies = result.fetchall()
+        return movies
+
     # TODO: delete?
     # def get_movies_without_stars(self):
     #     result = self.db.session.execute('SELECT * FROM movies;')

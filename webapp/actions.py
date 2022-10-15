@@ -26,6 +26,10 @@ class Actions:
         #    result = self.database.get_movies_without_stars()
         return result
 
+    def get_movies_in_order(self):
+        result = self.database.get_movies_in_order()
+        return result
+
     def get_movie_names(self):
         result = [movie.name for movie in self.database.get_movie_names()]
         return result

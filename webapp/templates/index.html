@@ -9,7 +9,7 @@
 <p>Voit luoda tunnuksen <a href="/register">täällä</a></p>
 {% endif %}
 
-<h2>Elokuvat</h2>
+<h2>Top 20 elokuvaa</h2>
 <ul>
 {% for movie in movies %}
 
@@ -29,5 +29,7 @@ Hae elokuvaa: <input type="text" name="query">
 <br>
 <input type="submit" value="Lähetä">
 </form>
+
+<p><a href="/movies">Katso lista kaikista elokuvista</a></p>
 
 {% endblock %}
