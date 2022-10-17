@@ -47,6 +47,9 @@ class Actions:
         movie_id = self.database.add_new_movie(name, director, year, description)
         return movie_id
 
+    def delete_movie(self, movie_id):
+        return self.database.delete_movie(movie_id)
+
     def give_star_review(self, user, stars, movie_id):
         if self.database.get_star_review_by_user(user, movie_id):
             star_id = self.database.update_star_review_by_user(user, movie_id, stars)
@@ -89,5 +92,5 @@ class Actions:
         return self.database.delete_review_for_movie(review_id)
 
     def check_csrf_token(self, csrf_token, validate_token):
-        return csrf_token != validate_token
+        return csrf_token == validate_token
 

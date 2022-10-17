@@ -33,7 +33,7 @@
 
     <div><textarea id="_text_review" name="review" rows="5" cols="40" minlength="10" maxlength="10000"></textarea></div>
     <br>
-    <button type="submit" class="button" onclick="checkReview('{{base_url}}',{{ movie.id }})">Anna arvio elokuvalle</button>
+    <button type="submit" class="button" onclick="checkReview('{{ base_url }}','{{ movie.id }}')">Anna arvio elokuvalle</button>
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
     </form>
 </div>
@@ -57,7 +57,8 @@
 </div>
 {% endfor %}
 {% if session.role == 1 %}
-<button onclick="remove('{{base_url}}',{{ movie.id }})">Poista arvioita</button>
+<button onclick="remove('{{base_url}}','{{ movie.id }}','{{ session.csrf_token }}')">Poista arvioita</button>
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 {% endif %}
 </div>
 </p>
@@ -75,7 +76,8 @@ function checkReview(url, movie_id) {
 </script>
 
 <script>
-function remove(url, movie_id) {
+function remove(url, movie_id, csrf_token) {
+    console.log(JSON.stringify({'csrf_token': csrf_token}))
     const x = document.getElementById('_reviews')
     const y = x.getElementsByTagName('input')
     const ids = Array.from(y).filter(i => i.checked).map(i => i.value)
@@ -91,7 +93,9 @@ function remove(url, movie_id) {
             method: 'DELETE',
             headers: {
                 'Content-type': 'application/json'
-            }
+            },
+            body: JSON.stringify({'csrf_token': csrf_token})
+
         })
     )
 

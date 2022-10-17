@@ -80,7 +80,7 @@ def movie(id):
         stars = request.form.get('stars')
         review = request.form.get('review')
         requested = request.form.get('request')
-        form_csrf_token = request.form.get('csrf')
+        form_csrf_token = request.form.get('csrf_token')
 
         try:
             if not actions.check_csrf_token(session['csrf_token'], form_csrf_token):
@@ -105,13 +105,29 @@ def movie(id):
 
 @app.route('/movies/<int:movie_id>/reviews/<int:review_id>', methods=['DELETE'])
 def remove_review(movie_id, review_id):
+    form_csrf_token = request.get_json()['csrf_token']
+    if not actions.check_csrf_token(session['csrf_token'], form_csrf_token):
+        print('not true')
+        abort(403)
     actions.delete_review_for_movie(review_id)
+    return Response('OK', status=302, mimetype='application/json')
+
+@app.route('/modify/<int:movie_id>/delete', methods=['DELETE'])
+def remove_movie(movie_id):
+    print('deleting')
+    form_csrf_token = request.get_json()['csrf_token']
+    if not actions.check_csrf_token(session['csrf_token'], form_csrf_token):
+        print('not true')
+        abort(403)
+
+    actions.delete_movie(movie_id)
     return Response('OK', status=302, mimetype='application/json')
 
 @app.route('/modify/<int:id>', methods=['GET', 'POST'])
 def modify_movie(id):
+
     if request.method == 'POST':
-        form_csrf_token = request.form.get('csrf')
+        form_csrf_token = request.form.get('csrf_token')
         if not actions.check_csrf_token(session['csrf_token'], form_csrf_token):
             abort(403)
 
@@ -124,14 +140,14 @@ def modify_movie(id):
 
     movie = actions.find_movie_by_id(id)
     if movie:
-        return render_template('modify.html', movie=movie)
+        return render_template('modify.html', movie=movie, base_url=request.root_url)
     return render_template('error.html', error_message='Tulit virheelliselle sivulle.')
 
 @app.route('/add', methods=['GET', 'POST'])
 def add_movie():
     if request.method == 'POST':
         # TODO: validate
-        form_csrf_token = request.form.get('csrf')
+        form_csrf_token = request.form.get('csrf_token')
         if not actions.check_csrf_token(session['csrf_token'], form_csrf_token):
             abort(403)
 

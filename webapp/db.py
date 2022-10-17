@@ -60,6 +60,12 @@ class Database:
         self.db.session.commit()
         return star_id
 
+    def delete_movie(self, movie_id):
+        result = self.db.session.execute('DELETE FROM movies WHERE id=:movie_id;',
+                                {'movie_id': movie_id})
+        self.db.session.commit()
+        return result
+
     def add_new_star_review(self, user_id, stars, movie_id):
         result = self.db.session.execute('INSERT INTO stars (user_id, stars, movie_id) VALUES (:user_id, :stars, :movie_id) RETURNING id',
                                          {'user_id':user_id, 'stars':stars, 'movie_id':movie_id})

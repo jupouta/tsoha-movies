@@ -2,7 +2,7 @@
 {% block content %}
 
 {% if session.role == 1 %}
-
+<div>
 <p>Muokkaa elokuvan <b>{{ movie.name }} ({{ movie.year }})</b> tietoja</p>
 <form action="/modify/{{ movie.id }}" method="POST">
 Nimi:
@@ -20,6 +20,40 @@ Kuvaus:
 <input type="submit" value="Muuta tietoja">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
+</div>
+
+<div>
+    <button id="_delete_movie" onclick="deleteMovie('{{base_url}}','{{ movie.id }}','{{ session.csrf_token }}')"><b>Poista elokuva</b></button>
+
+
+<script>
+function deleteMovie(url, movie_id, csrf_token) {
+    console.log(url)
+    console.log(movie_id)
+    const confirmation = confirm('Haluatko varmasti poistaa elokuvan?')
+    console.log(confirmation)
+
+    if (confirmation) {
+        console.log('yes')
+        fetch(url + 'modify/' + movie_id + '/delete',
+        {
+            method: 'DELETE',
+            headers: {
+                'Content-type': 'application/json',
+            },
+            body: JSON.stringify({'csrf_token': csrf_token})
+        })
+
+        window.location.replace(url + '/movies');
+
+    } else {
+        console.log('no')
+    }
+}
+</script>
+</div>
+
+<p>Katso kaikki elokuvat <a href="/movies">täällä</a></p>
 
 {% endif %}
 {% endblock %}

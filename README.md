@@ -31,5 +31,4 @@ Tämänhetkiset ominaisuudet:
 - HUOM! Testiylläpitäjän tunnukset 'admintest' ja salasana 'admintest'
 
 Puutteita:
-- Ylläpitäjä ei voi poistaa elokuvia
 - Syötteiden tarkistaminen vielä vaiheessa
