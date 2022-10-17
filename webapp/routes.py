@@ -2,6 +2,7 @@ import os
 
 from flask import current_app as app
 from flask import render_template, request, redirect, session, Response, abort
+from sqlalchemy import desc
 
 from .actions import Actions
 actions = Actions()
@@ -84,7 +85,7 @@ def movie(id):
         try:
             if not actions.check_csrf_token(session['csrf_token'], form_csrf_token):
                 abort(403)
-            if stars or review:
+            if stars and review:
                 actions.give_review(stars, review, id, session['user'])
             if requested:
                 actions.make_request(requested, id, session['user'])
@@ -107,15 +108,6 @@ def remove_review(movie_id, review_id):
     actions.delete_review_for_movie(review_id)
     return Response('OK', status=302, mimetype='application/json')
 
-    # movie = actions.find_movie_by_id(movie_id)
-    # reviews = actions.get_reviews_for_movie(movie_id)
-    # requests = actions.get_requests_for_movie(movie_id)
-    # return render_template('movie.html',
-    #                     base_url=request.root_url,
-    #                     movie=movie,
-    #                     reviews=reviews,
-    #                     requests=requests)
-
 @app.route('/modify/<int:id>', methods=['GET', 'POST'])
 def modify_movie(id):
     if request.method == 'POST':
@@ -134,6 +126,30 @@ def modify_movie(id):
     if movie:
         return render_template('modify.html', movie=movie)
     return render_template('error.html', error_message='Tulit virheelliselle sivulle.')
+
+@app.route('/add', methods=['GET', 'POST'])
+def add_movie():
+    if request.method == 'POST':
+        # TODO: validate
+        form_csrf_token = request.form.get('csrf')
+        if not actions.check_csrf_token(session['csrf_token'], form_csrf_token):
+            abort(403)
+
+        name = request.form.get('name')
+        director = request.form.get('director')
+        year = request.form.get('year')
+        description = request.form.get('description')
+        movie_id = actions.add_new_movie(name, director, year, description)
+
+        movie = actions.find_movie_by_id(movie_id)
+        if movie:
+            return render_template('movie.html',
+                            base_url=request.root_url,
+                            movie=movie,
+                            reviews=[],
+                            requests=[])
+
+    return render_template('add.html', error_message='Tulit virheelliselle sivulle.')
 
 # TODO: delete
 @app.route("/test")

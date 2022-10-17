@@ -43,6 +43,10 @@ class Actions:
         #    result = self.database.find_movie_by_id_without_stars(id)
         return result
 
+    def add_new_movie(self, name, director, year, description):
+        movie_id = self.database.add_new_movie(name, director, year, description)
+        return movie_id
+
     def give_star_review(self, user, stars, movie_id):
         if self.database.get_star_review_by_user(user, movie_id):
             star_id = self.database.update_star_review_by_user(user, movie_id, stars)
@@ -54,8 +58,7 @@ class Actions:
         star_id = self.give_star_review(user_id, stars, movie_id)
 
         # TODO: mitä jos sama käyttäjä lisää kommentin?
-        if review != '':
-            self.database.add_new_review(user_id, star_id, review, movie_id)
+        self.database.add_new_review(user_id, star_id, review, movie_id)
 
     # TODO: delete?
     # def get_stars_for_movie(self, movie_id):

@@ -53,6 +53,13 @@ class Database:
     #     movie = result.fetchone()
     #     return movie
 
+    def add_new_movie(self, name, director, year, description):
+        result = self.db.session.execute('INSERT INTO movies (name, director, year, description) VALUES (:name, :director, :year, :description) RETURNING id',
+                                         {'name':name, 'director':director, 'year':year, 'description':description})
+        star_id = result.fetchone()[0]
+        self.db.session.commit()
+        return star_id
+
     def add_new_star_review(self, user_id, stars, movie_id):
         result = self.db.session.execute('INSERT INTO stars (user_id, stars, movie_id) VALUES (:user_id, :stars, :movie_id) RETURNING id',
                                          {'user_id':user_id, 'stars':stars, 'movie_id':movie_id})

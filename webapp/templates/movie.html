@@ -16,22 +16,27 @@
 {% if session.user %}
 <hr>
 <p><h3>Anna arvio:</h3>
+<div>
     <form action="/movies/{{ movie.id }}" method="POST">
-    <select name="stars">
-        <option value="1"> 1
-        <option value="2"> 2
-        <option value="3" selected> 3
-        <option value="4"> 4
-        <option value="5"> 5
-    </select>
+    <div>
+        <select id="_stars" name="stars">
+            <option value="1"> 1
+            <option value="2"> 2
+            <option value="3" selected> 3
+            <option value="4"> 4
+            <option value="5"> 5
+        </select>
+    </div>
     <br>
     Kirjallinen arvio: <br>
     <br>
-    <textarea name="review" rows="5" cols="40" minlength="10" maxlength="10000"></textarea>
+
+    <div><textarea id="_text_review" name="review" rows="5" cols="40" minlength="10" maxlength="10000"></textarea></div>
     <br>
-    <button type="submit" class="button">Anna arvio elokuvalle</button>
+    <button type="submit" class="button" onclick="checkReview('{{base_url}}',{{ movie.id }})">Anna arvio elokuvalle</button>
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
     </form>
+</div>
 </p>
 
 <hr>
@@ -58,7 +63,19 @@
 </p>
 
 <script>
-function remove(url,movie_id) {
+function checkReview(url, movie_id) {
+    const x = document.getElementById('_text_review').value
+    console.log(x)
+
+    if (x.length == 0) {
+        alert('Kirjallinen arvio puuttuu!')
+        event.preventDefault()
+    }
+}
+</script>
+
+<script>
+function remove(url, movie_id) {
     const x = document.getElementById('_reviews')
     const y = x.getElementsByTagName('input')
     const ids = Array.from(y).filter(i => i.checked).map(i => i.value)
@@ -79,7 +96,6 @@ function remove(url,movie_id) {
     )
 
     window.location.reload(true)
-
 }
 </script>
 
