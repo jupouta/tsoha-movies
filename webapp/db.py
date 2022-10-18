@@ -26,15 +26,10 @@ class Database:
         return movies
 
     # TODO: delete?
-    # def get_movies_without_stars(self):
-    #     result = self.db.session.execute('SELECT * FROM movies;')
+    # def get_movie_names(self):
+    #     result = self.db.session.execute('SELECT name FROM movies;')
     #     movies = result.fetchall()
     #     return movies
-
-    def get_movie_names(self):
-        result = self.db.session.execute('SELECT name FROM movies;')
-        movies = result.fetchall()
-        return movies
 
     def find_movies_by_name(self, name):
         result = self.db.session.execute('SELECT * FROM movies WHERE LOWER(name) LIKE :name;', {'name':'%'+name+'%'})
@@ -46,12 +41,6 @@ class Database:
                                          {'movie_id':movie_id})
         movie = result.fetchone()
         return movie
-
-    # TODO: Delete?
-    # def find_movie_by_id_without_stars(self, movie_id):
-    #     result = self.db.session.execute('SELECT * FROM movies WHERE id=:movie_id;', {'movie_id':movie_id})
-    #     movie = result.fetchone()
-    #     return movie
 
     def add_new_movie(self, name, director, year, description):
         result = self.db.session.execute('INSERT INTO movies (name, director, year, description) VALUES (:name, :director, :year, :description) RETURNING id',
@@ -86,18 +75,7 @@ class Database:
         self.db.session.commit()
         return star_id
 
-    # TODO: delete?
-    # def get_stars_for_movie(self, movie_id):
-    #     result = self.db.session.execute('SELECT ROUND(AVG(stars), 2) FROM stars WHERE movie_id=:movie_id;', {'movie_id':movie_id})
-    #     stars_avg = result.fetchone()
-    #     return stars_avg
-
-    # TODO: delete?
-    # def get_star_count_for_movie(self, movie_id):
-    #     result = self.db.session.execute('SELECT COUNT(*) FROM stars WHERE movie_id=:movie_id;', {'movie_id':movie_id})
-    #     stars_count = result.fetchone()
-    #     return stars_count
-
+    # TODO: should return something?
     def add_new_review(self, user_id, star_id, review, movie_id):
         self.db.session.execute('INSERT INTO reviews (user_id, movie_id, star_id, comment, posted_at) VALUES (:user_id, :movie_id, :star_id, :comment, NOW())',
                                 {'user_id':user_id, 'movie_id':movie_id, 'star_id':star_id, 'comment':review})
@@ -109,6 +87,7 @@ class Database:
         reviews = result.fetchall()
         return reviews
 
+    # TODO: should return something?
     def make_request_for_movie(self, request_txt, movie_id, user_id):
         self.db.session.execute('INSERT INTO requests (user_id, movie_id, request, posted_at) VALUES (:user_id, :movie_id, :request, NOW())',
                                 {'user_id':user_id, 'movie_id':movie_id, 'request':request_txt})

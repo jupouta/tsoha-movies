@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<p>Kirjaudu sisään</p>
+<h3>Kirjautuminen</h3>
 <form action="/login" method="POST">
 Käyttäjätunnus:
 <input type="text" name="user" minlength="2" maxlength="20" required>
@@ -11,5 +11,7 @@ Salasana:
 <br>
 <input type="submit" value="Kirjaudu">
 </form>
+
+<p>Ei tunnusta? Rekisteröidy <a href="/register">täällä</a></p>
 
 {% endblock %}

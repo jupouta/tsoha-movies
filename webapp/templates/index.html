@@ -1,14 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
 
-{% if session.user %}
-<p>Olet kirjautunut nimellä {{ session.username }}</p>
-<a href="/logout">Kirjaudu ulos</a>
-{% else %}
-<p><a href="/login">Kirjaudu sisään</a></p>
-<p>Voit luoda tunnuksen <a href="/register">täällä</a></p>
-{% endif %}
-
+<hr>
 <h2>Top 20 elokuvaa</h2>
 <ul>
 {% for movie in movies %}
@@ -31,5 +24,9 @@ Hae elokuvaa: <input type="text" name="query">
 </form>
 
 <p><a href="/movies">Katso lista kaikista elokuvista</a></p>
+{% if session.role == 1 %}
+<p><a href="/add">Lisää uusi elokuva</a></p>
+
+{% endif %}
 
 {% endblock %}

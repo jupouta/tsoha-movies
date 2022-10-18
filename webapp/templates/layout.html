@@ -3,4 +3,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Elokuvasovellus</title>
 <h1>Elokuvatietokanta</h1>
+<a href="/">Etusivu</a><br>
+{% if session.user %}
+<a href="/logout">Kirjaudu ulos</a>
+{% else %}
+<a href="/login">Kirjaudu sisään</a>
+{% endif %}
 {% block content %}{% endblock %}

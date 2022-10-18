@@ -2,7 +2,6 @@ import os
 
 from flask import current_app as app
 from flask import render_template, request, redirect, session, Response, abort
-from sqlalchemy import desc
 
 from .actions import Actions
 actions = Actions()
@@ -110,7 +109,7 @@ def remove_review(movie_id, review_id):
         print('not true')
         abort(403)
     actions.delete_review_for_movie(review_id)
-    return Response('OK', status=302, mimetype='application/json')
+    return Response('OK', status=204, mimetype='application/json')
 
 @app.route('/modify/<int:movie_id>/delete', methods=['DELETE'])
 def remove_movie(movie_id):
@@ -121,7 +120,7 @@ def remove_movie(movie_id):
         abort(403)
 
     actions.delete_movie(movie_id)
-    return Response('OK', status=302, mimetype='application/json')
+    return Response('OK', status=204, mimetype='application/json')
 
 @app.route('/modify/<int:id>', methods=['GET', 'POST'])
 def modify_movie(id):

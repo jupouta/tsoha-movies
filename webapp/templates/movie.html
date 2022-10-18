@@ -111,6 +111,7 @@ function remove(url, movie_id, csrf_token) {
     <textarea name="request" rows="5" cols="40" minlength="10" maxlength="10000"></textarea>
     <br>
     <button type="submit" class="button">Lähetä muokkauspyyntö</button>
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 
 {% else %}

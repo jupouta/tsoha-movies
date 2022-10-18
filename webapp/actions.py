@@ -2,7 +2,7 @@ from . import db
 from webapp.db import Database
 from werkzeug.security import check_password_hash, generate_password_hash
 
-
+# TODO: check all those _not_ returning
 
 class Actions:
 
@@ -22,25 +22,22 @@ class Actions:
 
     def get_movies(self):
         result = self.database.get_movies()
-        #if not result:
-        #    result = self.database.get_movies_without_stars()
         return result
 
     def get_movies_in_order(self):
         result = self.database.get_movies_in_order()
         return result
 
-    def get_movie_names(self):
-        result = [movie.name for movie in self.database.get_movie_names()]
-        return result
+    # TODO: delete?
+    # def get_movie_names(self):
+    #     result = [movie.name for movie in self.database.get_movie_names()]
+    #     return result
 
     def find_movies_by_name(self, name):
         return self.database.find_movies_by_name(name.lower())
 
     def find_movie_by_id(self, id):
         result = self.database.find_movie_by_id(id)
-        #if not result:
-        #    result = self.database.find_movie_by_id_without_stars(id)
         return result
 
     def add_new_movie(self, name, director, year, description):
@@ -62,17 +59,6 @@ class Actions:
 
         # TODO: mitä jos sama käyttäjä lisää kommentin?
         self.database.add_new_review(user_id, star_id, review, movie_id)
-
-    # TODO: delete?
-    # def get_stars_for_movie(self, movie_id):
-    #     result = self.database.get_stars_for_movie(movie_id)
-    #     print(result)
-    #     return result[0]
-
-    # TODO: delete?
-    # def get_star_count_for_movie(self, movie_id):
-    #     result = self.database.get_star_count_for_movie(movie_id)
-    #     return result['count']
 
     def get_reviews_for_movie(self, movie_id):
         result = self.database.get_reviews_for_movie(movie_id)
