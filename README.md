@@ -31,4 +31,6 @@ Tämänhetkiset ominaisuudet:
 - HUOM! Testiylläpitäjän tunnukset 'admintest' ja salasana 'admintest'
 
 Puutteita:
-- Syötteiden tarkistaminen vielä vaiheessa
+
+## Sovelluksesta
+

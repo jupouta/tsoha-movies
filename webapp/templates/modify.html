@@ -42,9 +42,8 @@ function deleteMovie(url, movie_id, csrf_token) {
                 'Content-type': 'application/json',
             },
             body: JSON.stringify({'csrf_token': csrf_token})
-        })
-
-        window.location.replace(url + '/movies');
+        }).then(r => window.location.replace(url + 'movies'))
+          .catch(e => console.error(e))
 
     } else {
         console.log('no')

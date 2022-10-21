@@ -47,9 +47,8 @@
 <div>
     {% if session.role == 1 %}
     {{ review.posted_at }} {{ review.username }}<br>
-    <em>{{ review.comment }}</em>
-    <input id="_review_{{ review.id }}" type="checkbox" value="{{ review.id }}"><br>
-
+    <input id="_review_{{ review.id }}" type="checkbox" value="{{ review.id }}"><em>{{ review.comment }}</em>
+    <br>
     {% else %}
     {{ review.posted_at }} {{ review.username }}<br>
     <em>{{ review.comment }}</em><br>
@@ -87,7 +86,7 @@ function remove(url, movie_id, csrf_token) {
         alert('Valitse vähintään yksi poistettava arvio')
     }
 
-    ids.forEach(
+    Promise.all(ids.map(
         review_id => fetch(url + 'movies/' + movie_id + '/reviews/' + review_id,
         {
             method: 'DELETE',
@@ -97,9 +96,10 @@ function remove(url, movie_id, csrf_token) {
             body: JSON.stringify({'csrf_token': csrf_token})
 
         })
-    )
-
-    window.location.reload(true)
+    )).then(r => {
+        console.log(r)
+        window.location.reload(true)
+    }).catch(e => console.error(e))
 }
 </script>
 

@@ -12,7 +12,7 @@ def index():
     return render_template('index.html', movies=movies)
 
 @app.route('/login', methods=['GET', 'POST'])
-def result():
+def login():
     if request.method == 'POST':
         user=request.form['user']
         password=request.form['password']
@@ -52,15 +52,17 @@ def register():
 
     if not actions.check_user(username):
         if password != password_again:
-            return render_template('error.html', error_message='Salasanat eroavat. Tarkista molemmat salasanat.')
+            return render_template('error.html',
+                                   error_message='Salasanat eroavat. Tarkista molemmat salasanat.')
 
         actions.add_new_user(username, password)
         return redirect('/')
 
-    return render_template('error.html', error_message='Käyttäjä löytyy jo. Valitse uusi käyttäjätunnus.')
+    return render_template('error.html',
+                           error_message='Käyttäjä löytyy jo. Valitse uusi käyttäjätunnus.')
 
 @app.route('/movies')
-def query():
+def movie_query():
     if 'query' in request.args:
         query = request.args['query']
         # TODO: validate query
@@ -73,8 +75,8 @@ def query():
         movies = actions.get_movies()
         return render_template('movies.html', movies=movies)
 
-@app.route('/movies/<int:id>', methods=['GET', 'POST'])
-def movie(id):
+@app.route('/movies/<int:movie_id>', methods=['GET', 'POST'])
+def get_movie(movie_id):
     if request.method == 'POST':
         stars = request.form.get('stars')
         review = request.form.get('review')
@@ -85,16 +87,15 @@ def movie(id):
             if not actions.check_csrf_token(session['csrf_token'], form_csrf_token):
                 abort(403)
             if stars and review:
-                actions.give_review(stars, review, id, session['user'])
+                actions.give_review(stars, review, movie_id, session['user'])
             if requested:
-                actions.make_request(requested, id, session['user'])
+                actions.make_request(requested, movie_id, session['user'])
         except:
             return render_template('error.html', error_message='Et ole kirjautunut')
-    movie = actions.find_movie_by_id(id)
+    movie = actions.find_movie_by_id(movie_id)
     if movie:
-        # TODO: yhdistä selectit?
-        reviews = actions.get_reviews_for_movie(id)
-        requests = actions.get_requests_for_movie(id)
+        reviews = actions.get_reviews_for_movie(movie_id)
+        requests = actions.get_requests_for_movie(movie_id)
         return render_template('movie.html',
                            base_url=request.root_url,
                            movie=movie,
@@ -106,24 +107,21 @@ def movie(id):
 def remove_review(movie_id, review_id):
     form_csrf_token = request.get_json()['csrf_token']
     if not actions.check_csrf_token(session['csrf_token'], form_csrf_token):
-        print('not true')
         abort(403)
     actions.delete_review_for_movie(review_id)
-    return Response('OK', status=204, mimetype='application/json')
+    return Response('OK', status=200, mimetype='application/json')
 
 @app.route('/modify/<int:movie_id>/delete', methods=['DELETE'])
 def remove_movie(movie_id):
-    print('deleting')
     form_csrf_token = request.get_json()['csrf_token']
     if not actions.check_csrf_token(session['csrf_token'], form_csrf_token):
-        print('not true')
         abort(403)
 
     actions.delete_movie(movie_id)
-    return Response('OK', status=204, mimetype='application/json')
+    return Response('OK', status=200, mimetype='application/json')
 
-@app.route('/modify/<int:id>', methods=['GET', 'POST'])
-def modify_movie(id):
+@app.route('/modify/<int:movie_id>', methods=['GET', 'POST'])
+def modify_movie(movie_id):
 
     if request.method == 'POST':
         form_csrf_token = request.form.get('csrf_token')
@@ -135,9 +133,9 @@ def modify_movie(id):
         director = request.form.get('director')
         year = request.form.get('year')
         description = request.form.get('description')
-        actions.update_movie_info(name, director, year, description, id)
+        actions.update_movie_info(name, director, year, description, movie_id)
 
-    movie = actions.find_movie_by_id(id)
+    movie = actions.find_movie_by_id(movie_id)
     if movie:
         return render_template('modify.html', movie=movie, base_url=request.root_url)
     return render_template('error.html', error_message='Tulit virheelliselle sivulle.')
@@ -148,6 +146,8 @@ def add_movie():
         # TODO: validate
         form_csrf_token = request.form.get('csrf_token')
         if not actions.check_csrf_token(session['csrf_token'], form_csrf_token):
+            abort(403)
+        if not actions.check_user_role(session['role']):
             abort(403)
 
         name = request.form.get('name')
@@ -165,8 +165,3 @@ def add_movie():
                             requests=[])
 
     return render_template('add.html', error_message='Tulit virheelliselle sivulle.')
-
-# TODO: delete
-@app.route("/test")
-def test():
-    return "Hello world"

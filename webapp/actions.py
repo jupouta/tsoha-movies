@@ -2,7 +2,6 @@ from . import db
 from webapp.db import Database
 from werkzeug.security import check_password_hash, generate_password_hash
 
-# TODO: check all those _not_ returning
 
 class Actions:
 
@@ -28,16 +27,11 @@ class Actions:
         result = self.database.get_movies_in_order()
         return result
 
-    # TODO: delete?
-    # def get_movie_names(self):
-    #     result = [movie.name for movie in self.database.get_movie_names()]
-    #     return result
-
     def find_movies_by_name(self, name):
         return self.database.find_movies_by_name(name.lower())
 
-    def find_movie_by_id(self, id):
-        result = self.database.find_movie_by_id(id)
+    def find_movie_by_id(self, movie_id):
+        result = self.database.find_movie_by_id(movie_id)
         return result
 
     def add_new_movie(self, name, director, year, description):
@@ -56,8 +50,6 @@ class Actions:
 
     def give_review(self, stars, review, movie_id, user_id):
         star_id = self.give_star_review(user_id, stars, movie_id)
-
-        # TODO: mitä jos sama käyttäjä lisää kommentin?
         self.database.add_new_review(user_id, star_id, review, movie_id)
 
     def get_reviews_for_movie(self, movie_id):
@@ -80,3 +72,5 @@ class Actions:
     def check_csrf_token(self, csrf_token, validate_token):
         return csrf_token == validate_token
 
+    def check_user_role(self, user_role):
+        return user_role == 1

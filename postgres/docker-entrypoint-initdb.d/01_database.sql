@@ -23,14 +23,14 @@ CREATE TABLE stars (
     id SERIAL PRIMARY KEY,
     stars INTEGER,
     user_id INTEGER REFERENCES users,
-    movie_id INTEGER REFERENCES movies
+    movie_id INTEGER REFERENCES movies ON DELETE CASCADE
 );
 
 CREATE TABLE reviews (
     id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES users,
-    movie_id INTEGER REFERENCES movies,
-    star_id INTEGER REFERENCES stars,
+    movie_id INTEGER REFERENCES movies ON DELETE CASCADE,
+    star_id INTEGER REFERENCES stars ON DELETE CASCADE,
     comment TEXT,
     posted_at TIMESTAMP
 );
@@ -38,7 +38,7 @@ CREATE TABLE reviews (
 CREATE TABLE requests (
     id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES users,
-    movie_id INTEGER REFERENCES movies,
+    movie_id INTEGER REFERENCES movies ON DELETE CASCADE,
     request TEXT,
     posted_at TIMESTAMP
 );
